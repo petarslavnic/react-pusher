@@ -8,9 +8,9 @@ module.exports = {
   entry: './src/index.ts',
   devtool: 'source-map',
   output: {
-    filename: 'react-realtime.js',
+    filename: 'react-pusher.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'reactRealtime',
+    library: 'reactPusher',
     libraryTarget: 'umd',
   },
   optimization: {

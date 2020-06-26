@@ -1,8 +1,8 @@
 {
-  "name": "react-realtime",
-  "version": "1.2.0",
+  "name": "react-pusher",
+  "version": "0.0.1",
   "description": "Set of components which provides easy integration Pusher like notification service into your React application.",
-  "main": "dist/react-realtime.js",
+  "main": "dist/react-pusher.js",
   "files": [
     "dist"
   ],
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/petarslavnic/react-realtime.git"
+    "url": "https://github.com/petarslavnic/react-pusher.git"
   },
   "keywords": [
     "react",
@@ -23,9 +23,9 @@
     "socket"
   ],
   "bugs": {
-    "url": "https://github.com/petarslavnic/react-realtime/issues"
+    "url": "https://github.com/petarslavnic/react-pusher/issues"
   },
-  "homepage": "https://github.com/petarslavnic/react-realtime",
+  "homepage": "https://github.com/petarslavnic/react-pusher",
   "scripts": {
     "build": "webpack",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
