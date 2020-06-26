@@ -107,7 +107,7 @@ const pusher = new Pusher(APP_KEY, {
 
 const App = () => {
   return (
-    <PusherProvider connector={pusher}>
+    <PusherProvider instance={pusher}>
       <PusherChannel name="my-channel">
         <MyComponent />
       </PusherChannel>
