@@ -9,7 +9,7 @@ import {
 } from '../../src'
 
 describe('<PusherProvider />', () => {
-  let connector, wrapper, unsubscribe, bind, unbind, trigger
+  let pusher, wrapper, unsubscribe, bind, unbind, trigger
   let MyComponent
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('<PusherProvider />', () => {
     unbind = jest.fn()
     trigger = jest.fn()
     unsubscribe = jest.fn()
-    connector = {
+    pusher = {
       subscribe: () => ({ bind, unbind, trigger }),
       unsubscribe,
       connection: {
@@ -37,14 +37,14 @@ describe('<PusherProvider />', () => {
     bind = null
     unbind = null
     unsubscribe = null
-    connector = null
+    pusher = null
     wrapper = null
     MyComponent = null
   })
 
   it(`should render`, () => {
     wrapper = mount(
-      <PusherProvider instance={connector}>
+      <PusherProvider instance={pusher}>
         <PusherChannel name="test">
           <MyComponent />
         </PusherChannel>
@@ -56,7 +56,7 @@ describe('<PusherProvider />', () => {
 
   it(`should unsubscribe channel on component will unmount event`, () => {
     wrapper = mount(
-      <PusherProvider instance={connector}>
+      <PusherProvider instance={pusher}>
         <PusherChannel name="test">
           <MyComponent />
         </PusherChannel>
@@ -71,7 +71,7 @@ describe('<PusherProvider />', () => {
     const myCallback = jest.fn()
 
     wrapper = mount(
-      <PusherProvider instance={connector}>
+      <PusherProvider instance={pusher}>
         <PusherChannel name="test">
           <MyComponent callback={myCallback}/>
         </PusherChannel>
@@ -100,7 +100,7 @@ describe('<PusherProvider />', () => {
     }
 
     wrapper = mount(
-      <PusherProvider instance={connector}>
+      <PusherProvider instance={pusher}>
         <PusherChannel name="test">
           <MyComponent />
         </PusherChannel>
@@ -122,20 +122,20 @@ describe('<PusherProvider />', () => {
     const myCallback = jest.fn()
 
     wrapper = mount(
-      <PusherProvider instance={connector}>
+      <PusherProvider instance={pusher}>
         <PusherChannel name="test">
           <MyComponent callback={myCallback} />
         </PusherChannel>
       </PusherProvider>
     )
 
-    expect(connector.connection.unbind).not.toHaveBeenCalled()
-    expect(connector.connection.bind).toHaveBeenCalled()
-    expect(connector.connection.bind).toHaveBeenCalledWith(`connected`, myCallback)
+    expect(pusher.connection.unbind).not.toHaveBeenCalled()
+    expect(pusher.connection.bind).toHaveBeenCalled()
+    expect(pusher.connection.bind).toHaveBeenCalledWith(`connected`, myCallback)
 
     wrapper.unmount()
 
-    expect(connector.connection.unbind).toHaveBeenCalled()
-    expect(connector.connection.unbind).toHaveBeenCalledWith(`connected`, myCallback)
+    expect(pusher.connection.unbind).toHaveBeenCalled()
+    expect(pusher.connection.unbind).toHaveBeenCalledWith(`connected`, myCallback)
   })
 })
