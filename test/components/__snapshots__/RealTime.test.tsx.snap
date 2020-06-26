@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RealTimeProvider /> should render 1`] = `
+<Component
+  instance={
+    Object {
+      "connection": Object {
+        "bind": [MockFunction],
+        "unbind": [MockFunction],
+      },
+      "subscribe": [Function],
+      "unsubscribe": [MockFunction],
+    }
+  }
+>
+  <Component
+    name="test"
+  >
+    <MyComponent>
+      <span>
+        Test
+      </span>
+    </MyComponent>
+  </Component>
+</Component>
+`;
