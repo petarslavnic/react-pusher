@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { mount } from 'enzyme'
+import Pusher from 'pusher-js'
 import {
   PusherProvider,
   PusherChannel,
@@ -8,9 +9,13 @@ import {
   useConnectionStatus,
 } from '../../src'
 
+interface IMyComponent {
+  callback?: () => void;
+}
+
 describe('<PusherProvider />', () => {
-  let pusher, wrapper, unsubscribe, bind, unbind, trigger
-  let MyComponent
+  let pusher: Pusher, wrapper, unsubscribe, bind, unbind, trigger
+  let MyComponent: React.FC<IMyComponent>
 
   beforeEach(() => {
     bind = jest.fn()
@@ -37,9 +42,9 @@ describe('<PusherProvider />', () => {
     bind = null
     unbind = null
     unsubscribe = null
-    pusher = null
+    // pusher = null
     wrapper = null
-    MyComponent = null
+    // MyComponent = null
   })
 
   it(`should render`, () => {
