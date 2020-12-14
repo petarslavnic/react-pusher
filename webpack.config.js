@@ -1,6 +1,5 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const pkg = require('./package.json');
 
 module.exports = {
@@ -14,26 +13,19 @@ module.exports = {
     libraryTarget: 'umd',
   },
   optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      }),
-    ],
+    minimize: true
   },
   externals: Object.keys(pkg.peerDependencies || {}),
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader'
-      }
-    ],
-  },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.json']
+  },
+  module: {
+    rules: [{
+      // Include ts, tsx, js, and jsx files.
+      test: /\.(ts|js)x?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+    }],
   },
   plugins: [
     new CleanWebpackPlugin(),
