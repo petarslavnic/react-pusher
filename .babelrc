@@ -4,6 +4,10 @@
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
+  "ignore": [
+    "**/*.test.js",
+    "**/*.test.tsx"
+  ],
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread"
   ]
