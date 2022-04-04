@@ -1,8 +1,11 @@
-import React from 'react'
-import * as PusherTypes from 'pusher-js'
+import { createContext, useContext } from "react";
+import * as PusherTypes from "pusher-js";
 
 export interface PusherChannel {
   channel?: PusherTypes.Channel;
 }
 
-export const PusherChannelContext = React.createContext<PusherChannel>({})
+export const PusherChannelContext = createContext<PusherChannel>({});
+
+export const usePusherChannelContext = (): PusherChannel =>
+  useContext(PusherChannelContext);

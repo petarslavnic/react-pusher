@@ -1,18 +1,18 @@
-import { useContext, useCallback } from 'react'
-import { PusherChannelContext } from '../context'
+import { useCallback } from "react";
+import { usePusherChannelContext } from "../context";
 
-export const useChannelEventTrigger = (): (event: string, data: any) => boolean => {
-  const { channel } = useContext(PusherChannelContext)
+export const useChannelEventTrigger = (): ((
+  event: string,
+  data: unknown
+) => boolean) => {
+  const { channel } = usePusherChannelContext();
 
   const trigger = useCallback(
-    (event: string, data: any): boolean => {
-      if (channel) {
-        return channel.trigger(event, data)
-      }
-      return false
+    (event: string, data: unknown): boolean => {
+      return channel ? channel.trigger(event, data) : false;
     },
-    [channel],
-  )
+    [channel]
+  );
 
-  return trigger
-}
+  return trigger;
+};

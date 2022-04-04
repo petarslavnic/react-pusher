@@ -5,7 +5,20 @@ exports[`<PusherProvider /> should render 1`] = `
   instance={
     Object {
       "connection": Object {
-        "bind": [MockFunction],
+        "bind": [MockFunction] {
+          "calls": Array [
+            Array [
+              "connected",
+              undefined,
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
         "unbind": [MockFunction],
       },
       "subscribe": [Function],
@@ -17,9 +30,11 @@ exports[`<PusherProvider /> should render 1`] = `
     name="test"
   >
     <MyComponent>
-      <span>
-        Test
-      </span>
+      <button
+        className="test"
+        onClick={[Function]}
+        type="button"
+      />
     </MyComponent>
   </PusherChannel>
 </PusherProvider>
