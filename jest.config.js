@@ -1,25 +1,19 @@
 module.exports = {
-  roots: [
-    "test",
-  ],
-  testMatch: [
-    "**/?(*.)+(spec|test).+(ts|tsx|js)",
-  ],
-  transform: {
-    "^.+\\.(ts|tsx)?$": "ts-jest",
+  roots: ["test"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
-  snapshotSerializers: [
-    "<rootDir>/node_modules/enzyme-to-json/serializer",
-  ],
-  setupFilesAfterEnv: [
-    "<rootDir>/test/setupEnzyme.ts",
-  ],
+  testMatch: ["<rootDir>/(test/**/*.test.(ts|tsx))"],
+  transformIgnorePatterns: ["<rootDir>/node_modules/"],
+  snapshotSerializers: ["<rootDir>/node_modules/enzyme-to-json/serializer"],
+  setupFilesAfterEnv: ["<rootDir>/test/setup.ts"],
   coverageThreshold: {
     global: {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: 80
-    }
-  }
-}
+      statements: 80,
+    },
+  },
+  testEnvironment: "jsdom",
+};
