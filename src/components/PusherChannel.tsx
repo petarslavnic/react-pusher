@@ -1,33 +1,30 @@
-import React, { FC, useState, useContext, useEffect } from 'react'
-import { PusherContext, PusherChannelContext } from '../context'
-import * as PusherTypes from 'pusher-js'
+import React, { FC, useState, useEffect } from "react";
+import { PusherChannelContext, usePusherContext } from "../context";
+import * as PusherTypes from "pusher-js";
 
 interface PusherChannelProps {
   name: string;
 }
 
 export const PusherChannel: FC<PusherChannelProps> = ({ name, children }) => {
-  const { pusher } = useContext(PusherContext)
-  const [ channel, setChannel ] = useState<PusherTypes.Channel>()
+  const { pusher } = usePusherContext();
+  const [channel, setChannel] = useState<PusherTypes.Channel>();
 
-  useEffect(
-    () => {
-      const channel = pusher?.subscribe(name)
+  useEffect(() => {
+    const channel = pusher?.subscribe(name);
 
-      setChannel(channel)
+    setChannel(channel);
 
-      return () => {
-        pusher?.unsubscribe(name)
-      }
-    },
-    [name, pusher]
-  )
+    return () => {
+      pusher?.unsubscribe(name);
+    };
+  }, [name, pusher]);
 
   return (
     <PusherChannelContext.Provider value={{ channel }}>
-      {React.Children.only(children)}
+      {children}
     </PusherChannelContext.Provider>
-  )
-}
+  );
+};
 
-PusherChannel.displayName = 'PusherChannel'
+PusherChannel.displayName = "PusherChannel";

@@ -1,17 +1,20 @@
-import React, { FC } from 'react'
-import { PusherContext } from '../context'
-import Pusher from 'pusher-js'
+import React, { FC } from "react";
+import Pusher from "pusher-js";
+import { PusherContext } from "../context";
 
 interface PusherProviderProps {
   instance: Pusher;
 }
 
-export const PusherProvider: FC<PusherProviderProps> = ({ instance, children }) => {
+export const PusherProvider: FC<PusherProviderProps> = ({
+  instance,
+  children,
+}) => {
   return (
     <PusherContext.Provider value={{ pusher: instance }}>
-      {React.Children.only(children)}
+      {children}
     </PusherContext.Provider>
-  )
-}
+  );
+};
 
-PusherProvider.displayName = 'PusherProvider'
+PusherProvider.displayName = "PusherProvider";

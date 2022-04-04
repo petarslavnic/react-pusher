@@ -1,20 +1,17 @@
-import { useEffect, useContext } from 'react'
-import { PusherChannelContext } from '../context'
+import { useEffect } from "react";
+import { usePusherChannelContext } from "../context";
 
 export const useChannelEventListener = (
-  eventName: string, 
-  eventCallback: (data: any) => void
+  eventName: string,
+  eventCallback: (data: unknown) => void
 ): void => {
-  const { channel } = useContext(PusherChannelContext)
+  const { channel } = usePusherChannelContext();
 
-  useEffect(
-    () => {
-      channel?.bind(eventName, eventCallback)
+  useEffect(() => {
+    channel?.bind(eventName, eventCallback);
 
-      return () => {
-        channel?.unbind(eventName, eventCallback)
-      }
-    },
-    [channel, eventName, eventCallback]
-  )
-}
+    return () => {
+      channel?.unbind(eventName, eventCallback);
+    };
+  }, [channel, eventName, eventCallback]);
+};

@@ -1,20 +1,17 @@
-import { useEffect, useContext } from 'react'
-import { PusherContext } from '../context'
+import { useEffect } from "react";
+import { usePusherContext } from "../context";
 
 export const useConnectionStatus = (
-  eventName: string, 
-  eventCallback: (data: any) => void
+  eventName: string,
+  eventCallback: (data: unknown) => void
 ): void => {
-  const { pusher } = useContext(PusherContext)
+  const { pusher } = usePusherContext();
 
-  useEffect(
-    () => {
-      pusher?.connection.bind(eventName, eventCallback)
+  useEffect(() => {
+    pusher?.connection.bind(eventName, eventCallback);
 
-      return () => {
-        pusher?.connection.unbind(eventName, eventCallback)
-      }
-    },
-    [pusher, eventName, eventCallback]
-  )
-}
+    return () => {
+      pusher?.connection.unbind(eventName, eventCallback);
+    };
+  }, [pusher, eventName, eventCallback]);
+};
