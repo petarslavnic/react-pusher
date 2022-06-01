@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { usePusherChannelContext } from "../context";
+import { useChannel } from "./useChannel";
 
 export const useChannelEventListener = (
   eventName: string,
-  eventCallback: (data: unknown) => void
+  eventCallback: (data: unknown) => void,
+  channelName?: string
 ): void => {
-  const { channel } = usePusherChannelContext();
+  const channel = useChannel(channelName);
 
   useEffect(() => {
     channel?.bind(eventName, eventCallback);

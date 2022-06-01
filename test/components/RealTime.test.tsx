@@ -8,26 +8,34 @@ import {
   useConnectionStatus,
 } from "../../src";
 
-const MyComponent: FC<{ callback?: () => null }> = ({ callback }) => {
-  useChannelEventListener(`CommentCreated`, callback);
+const MyComponent: FC<{ callback?: () => null; channelName?: string }> = ({
+  callback,
+  channelName,
+}) => {
   useConnectionStatus(`connected`, callback);
-  const trigger = useChannelEventTrigger();
+  useChannelEventListener(`CommentCreated`, callback, channelName);
+  const trigger = useChannelEventTrigger(channelName);
   const handleClick = useCallback(() => {
-    trigger(`TestEvent`, { test: 1234 });
-  }, [trigger]);
+    trigger(`TestEvent`, { test: 1234, channelName });
+  }, [trigger, channelName]);
   return <button className="test" type="button" onClick={handleClick} />;
 };
 
 describe("<PusherProvider />", () => {
-  let pusher, wrapper, unsubscribe, bind, unbind, trigger;
+  let pusher, wrapper, subscribe, unsubscribe, bind, unbind, trigger;
 
   beforeEach(() => {
     bind = jest.fn();
     unbind = jest.fn();
     trigger = jest.fn();
     unsubscribe = jest.fn();
+    subscribe = jest.fn();
     pusher = {
-      subscribe: () => ({ bind, unbind, trigger }),
+      subscribe: subscribe.mockReturnValue({
+        bind,
+        unbind,
+        trigger,
+      }),
       unsubscribe,
       connection: {
         bind: jest.fn(),
@@ -142,5 +150,29 @@ describe("<PusherProvider />", () => {
     wrapper.find(`.test`).first().simulate(`click`);
 
     expect(trigger).not.toHaveBeenCalled();
+  });
+
+  it(`should subscribe to proper channel`, () => {
+    wrapper = mount(
+      <PusherProvider instance={pusher}>
+        <PusherChannel name="test1">
+          <PusherChannel name="test2">
+            <MyComponent channelName="test1" />
+          </PusherChannel>
+        </PusherChannel>
+      </PusherProvider>
+    );
+
+    expect(subscribe).toHaveBeenCalledTimes(2);
+    expect(subscribe).toHaveBeenCalledWith(`test2`);
+    expect(subscribe).toHaveBeenCalledWith(`test1`);
+
+    wrapper.find(`.test`).first().simulate(`click`);
+
+    expect(trigger).toHaveBeenCalledTimes(1);
+    expect(trigger).toHaveBeenCalledWith(`TestEvent`, {
+      test: 1234,
+      channelName: "test1",
+    });
   });
 });

@@ -21,7 +21,36 @@ exports[`<PusherProvider /> should render 1`] = `
         },
         "unbind": [MockFunction],
       },
-      "subscribe": [Function],
+      "subscribe": [MockFunction] {
+        "calls": Array [
+          Array [
+            "test",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": Object {
+              "bind": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "CommentCreated",
+                    undefined,
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
+              "trigger": [MockFunction],
+              "unbind": [MockFunction],
+            },
+          },
+        ],
+      },
       "unsubscribe": [MockFunction],
     }
   }

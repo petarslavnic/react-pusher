@@ -1,5 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
-import { PusherChannelContext, usePusherContext } from "../context";
+import {
+  PusherChannelContext,
+  usePusherChannelContext,
+  usePusherContext,
+} from "../context";
 import * as PusherTypes from "pusher-js";
 
 interface PusherChannelProps {
@@ -8,6 +12,7 @@ interface PusherChannelProps {
 
 export const PusherChannel: FC<PusherChannelProps> = ({ name, children }) => {
   const { pusher } = usePusherContext();
+  const { channels } = usePusherChannelContext();
   const [channel, setChannel] = useState<PusherTypes.Channel>();
 
   useEffect(() => {
@@ -21,7 +26,9 @@ export const PusherChannel: FC<PusherChannelProps> = ({ name, children }) => {
   }, [name, pusher]);
 
   return (
-    <PusherChannelContext.Provider value={{ channel }}>
+    <PusherChannelContext.Provider
+      value={{ channel, channels: { ...channels, [name]: channel } }}
+    >
       {children}
     </PusherChannelContext.Provider>
   );
